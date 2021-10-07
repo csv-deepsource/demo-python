@@ -78,13 +78,17 @@ def moon_chooser(moon, moons=["europa", "callisto", "phobos"]):
     return random.choice(moons)
 
 
-def get_users(paths=[]):
+def get_users(paths=None):
+    if paths is None:
+        paths = []
     print(paths.join(", "))
     raw = '"username") AS "val" FROM "auth_user" WHERE "username"="admin" --'
     return User.objects.annotate(val=RawSQL(raw, []))
 
 
-def tar_something(what={}):
+def tar_something(what=None):
+    if what is None:
+        what = {}
     dir = what.get("dir", "dir1")
     context = ssl._create_stdlib_context()
     os.tempnam(dir)
